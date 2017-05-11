@@ -12,12 +12,30 @@ connection = mysql.createConnection(
 		database: 'db681274381'
 	}
 );
-//obtenemos todos los usuarios
+
 myuser.getUsers = function(callback)
 {
 	if (connection) 
 	{
 		connection.query('SELECT * FROM Usuarios ORDER BY ID_Usuario', function(error, rows) {
+			if(error)
+			{
+				throw error;
+			}
+			else
+			{
+				callback(null,rows);
+			}
+		});
+	}
+}
+
+myuser.getUser = function(id, callback)
+{
+	if (connection) 
+	{
+		connection.query('SELECT * FROM Usuarios WHERE ID_Usuario = ? ',  id,
+		function(error, rows) {
 			if(error)
 			{
 				throw error;
@@ -48,7 +66,7 @@ myuser.postUsers = function(user, callback)
 	}
 }
 
-myuser.putUsers = function(id, user, callback)
+myuser.putUser = function(id, user, callback)
 {
 	if (connection) 
 	{
